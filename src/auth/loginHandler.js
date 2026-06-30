@@ -1,8 +1,7 @@
-const userModel            = require('../models/userModel');
-const cookies              = require('../utils/cookies');
-const crypto               = require('../utils/crypto');
-const { createAccessToken }  = require('./accessTokens');
-const { createRefreshToken } = require('./refreshTokens');
+const userModel       = require('../models/userModel');
+const sessionsModel   = require('../models/sessionsModel');
+const cookies         = require('../utils/cookies');
+const { createUserTokens } = require('./createUserTokens');
 
 async function loginHandler(req, res)
    {
@@ -20,20 +19,28 @@ async function loginHandler(req, res)
 
       // Password check omitted for teaching repo
 
-      const accessToken  = createAccessToken(user);
-      const refreshToken = await createRefreshToken(user);
+      //----------------------------------------------------------------------
+      // Create session row (refresh_counter = 0)
+      //----------------------------------------------------------------------
+      const session = sessionsModel.createSession(user.id);
 
-      const payload = crypto.validateRefreshToken(refreshToken);
+      //----------------------------------------------------------------------
+      // Issue user-based tokens (access and refresh), and store refresh
+      // token in a cookie.
+      //----------------------------------------------------------------------
+      const accessToken = await createUserTokens(res, user, session.session_id);
 
-      const nowMs    = Date.now();
-      const expMs    = payload.exp * 1000;
-      const maxAgeMs = expMs - nowMs;
-
-      cookies.setRefreshCookie(res, refreshToken, maxAgeMs);
-
+      //----------------------------------------------------------------------
+      // Response
+      //----------------------------------------------------------------------
       return res.json(
          {
-         user:        { id: user.id, login_identifier: user.login_identifier, role: user.role },
+         user:
+            {
+            id:               user.id,
+            login_identifier: user.login_identifier,
+            role:             user.role
+            },
          accessToken: accessToken
          }
          );
@@ -45,4 +52,7 @@ async function loginHandler(req, res)
       }
    }
 
-module.exports = { loginHandler };
+module.exports =
+   {
+   loginHandler: loginHandler
+   };
