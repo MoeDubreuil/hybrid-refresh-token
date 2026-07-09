@@ -17,7 +17,7 @@ async function loginHandler(req, res)
          return res.status(401).json({ error: 'Invalid credentials' });
          }
 
-      // Password check omitted for teaching repo
+      // Password check omitted for demonstration repo
 
       //----------------------------------------------------------------------
       // Create session row (refresh_counter = 0)
@@ -28,7 +28,7 @@ async function loginHandler(req, res)
       // Issue user-based tokens (access and refresh), and store refresh
       // token in a cookie.
       //----------------------------------------------------------------------
-      const accessToken = await createUserTokens(res, user, session.session_id);
+      const accessToken = await createUserTokens(res, user, session);
 
       //----------------------------------------------------------------------
       // Response

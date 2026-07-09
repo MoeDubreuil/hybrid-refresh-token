@@ -1,5 +1,6 @@
 // sessionsModel.js
-// In-memory session table for teaching purposes.
+// In-memory session table for demonstration purposes. In this context simplicity takes
+// priority over recommended practices.
 
 var sessions = [];
 var nextSessionId = 1;
