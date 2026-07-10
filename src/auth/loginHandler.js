@@ -3,6 +3,9 @@ const sessionsModel   = require('../models/sessionsModel');
 const cookies         = require('../utils/cookies');
 const { createUserTokens } = require('./createUserTokens');
 
+//------------------------------------------------------------------------------
+// loginHandler
+//------------------------------------------------------------------------------
 async function loginHandler(req, res)
    {
    const login_identifier = req.body.login_identifier;
@@ -17,22 +20,16 @@ async function loginHandler(req, res)
          return res.status(401).json({ error: 'Invalid credentials' });
          }
 
-      // Password check omitted for demonstration repo
+      // Note: Password check omitted for demonstration repo
 
-      //----------------------------------------------------------------------
       // Create session row (refresh_counter = 0)
-      //----------------------------------------------------------------------
       const session = sessionsModel.createSession(user.id);
 
-      //----------------------------------------------------------------------
       // Issue user-based tokens (access and refresh), and store refresh
       // token in a cookie.
-      //----------------------------------------------------------------------
       const accessToken = await createUserTokens(res, user, session);
 
-      //----------------------------------------------------------------------
-      // Response
-      //----------------------------------------------------------------------
+      // Create the response object
       return res.json(
          {
          user:

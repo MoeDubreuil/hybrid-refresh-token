@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
 
+//------------------------------------------------------------------------------
+// generateAccessToken
+//------------------------------------------------------------------------------
 function generateAccessToken(payload)
    {
    return jwt.sign(
@@ -9,6 +12,9 @@ function generateAccessToken(payload)
       );
    }
 
+//------------------------------------------------------------------------------
+// generateRefreshToken
+//------------------------------------------------------------------------------
 function generateRefreshToken(payload)
    {
    return jwt.sign(
@@ -18,6 +24,9 @@ function generateRefreshToken(payload)
       );
    }
 
+//------------------------------------------------------------------------------
+// validateRefreshToken
+//------------------------------------------------------------------------------
 function validateRefreshToken(token)
    {
    return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);

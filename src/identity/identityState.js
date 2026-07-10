@@ -1,3 +1,10 @@
+
+//------------------------------------------------------------------------------
+// createUserIdentityState
+//
+// This function takes a user and returns all of the identity state fields in
+// a JavaScript object.
+//------------------------------------------------------------------------------
 function createUserIdentityState(user)
    {
    return {

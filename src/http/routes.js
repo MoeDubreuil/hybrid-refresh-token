@@ -3,6 +3,9 @@ const { loginHandler }   = require('../auth/loginHandler');
 const { refreshHandler } = require('../auth/refreshHandler');
 const { logoutHandler }  = require('../auth/logoutHandler');
 
+//------------------------------------------------------------------------------
+// buildRoutes
+//------------------------------------------------------------------------------
 function buildRoutes()
    {
    const router = express.Router();

@@ -2,7 +2,7 @@ const crypto       = require('../utils/crypto');
 const identityHash = require('../identity/identityHash');
 
 //------------------------------------------------------------------------------
-// createRefreshToken (teaching repo version)
+// createRefreshToken
 //------------------------------------------------------------------------------
 async function createRefreshToken(user, session)
    {

@@ -1,5 +1,8 @@
 const crypto = require('../utils/crypto');
 
+//------------------------------------------------------------------------------
+// createAccessToken
+//------------------------------------------------------------------------------
 function createAccessToken(user)
    {
    return crypto.generateAccessToken(

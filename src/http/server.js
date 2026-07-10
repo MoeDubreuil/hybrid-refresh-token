@@ -2,6 +2,9 @@ const express        = require('express');
 const cookieParser   = require('cookie-parser');
 const { buildRoutes } = require('./routes');
 
+//------------------------------------------------------------------------------
+// createServer
+//------------------------------------------------------------------------------
 async function createServer()
    {
    const app = express();
