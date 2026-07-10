@@ -1,6 +1,9 @@
 # Node modules
 node_modules/
 
+# Script artifacts
+scripts/cookies/
+
 # Environment files
 .env
 
