@@ -2,7 +2,7 @@
 // In-memory session table for demonstration purposes. In this context simplicity takes
 // priority over recommended practices.
 
-var sessions = [];
+var sessions = new Map();
 var nextSessionId = 1;
 
 //------------------------------------------------------------------------------
@@ -19,9 +19,8 @@ function createSession(user_id)
       updated_at: Date.now()
       };
 
+   sessions.set(session.session_id, session);
    ++ nextSessionId;
-
-   sessions.push(session);
 
    return session;
    }
@@ -31,15 +30,7 @@ function createSession(user_id)
 //------------------------------------------------------------------------------
 function getSessionById(session_id)
    {
-   var i;
-
-   for (i = 0; i < sessions.length; i++)
-      {
-      if ( sessions[i].session_id === session_id )
-         return sessions[i];
-      }
-
-   return null;
+   return sessions.get(session_id) || null;
    }
 
 //------------------------------------------------------------------------------
@@ -63,18 +54,7 @@ function incrementRefreshCounter(session_id)
 //------------------------------------------------------------------------------
 function deleteSessionById(session_id)
    {
-   var i;
-
-   for (i = 0; i < sessions.length; i++)
-      {
-      if ( sessions[i].session_id === session_id )
-         {
-         sessions.splice(i, 1);
-         return true;
-         }
-      }
-
-   return false;
+   return sessions.delete(session_id);
    }
 
 //------------------------------------------------------------------------------
@@ -83,13 +63,15 @@ function deleteSessionById(session_id)
 function deleteSessionsForUser(user_id)
    {
    var count = 0;
-   var i;
 
-   for (i = sessions.length - 1; i >= 0; i--)
+   for (const entry of sessions.entries())
       {
-      if (sessions[i].user_id === user_id)
+      var session_id = entry[0];
+      var my_session = entry[1];
+
+      if ( my_session.user_id === user_id )
          {
-         sessions.splice(i, 1);
+         deleteSessionById(session_id);
          ++ count;
          }
       }
@@ -99,9 +81,9 @@ function deleteSessionsForUser(user_id)
 
 module.exports =
    {
-   createSession: createSession,
-   getSessionById: getSessionById,
-   incrementRefreshCounter: incrementRefreshCounter,
-   deleteSessionById: deleteSessionById,
-   deleteSessionsForUser: deleteSessionsForUser
+   createSession,
+   getSessionById,
+   incrementRefreshCounter,
+   deleteSessionById,
+   deleteSessionsForUser
    };
