@@ -1,3 +1,7 @@
+**This repository is a teaching reference.
+It is not a production authentication system.
+It intentionally omits security‑critical features**.
+
 # **Hybrid Refresh Token Reference Implementation**
 
 A teaching‑safe reference implementation of the **Hybrid Refresh Token Model**.
