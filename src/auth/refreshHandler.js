@@ -31,6 +31,10 @@ function validateSession(session, payload)
 //------------------------------------------------------------------------------
 // refreshHandler
 //------------------------------------------------------------------------------
+// NOTE: These log messages and error responses are intentionally verbose for
+// teaching purposes. In a production system, you would NOT reveal internal
+// validation details. All failures should collapse to a generic 401 response.
+//------------------------------------------------------------------------------
 async function refreshHandler(req, res)
    {
    const refreshToken = req?.cookies?.refreshToken;
@@ -54,7 +58,7 @@ async function refreshHandler(req, res)
          {
          console.log("REFRESH FAILED: malformed or invalid JWT");
          cookies.clearRefreshCookie(res);
-         return res.status(401).json({ error: 'Invalid token' });
+         return res.status(401).json({ error: 'Malformed or invalid refresh token.' });
          }
 
       // 2. Locate user
@@ -64,7 +68,7 @@ async function refreshHandler(req, res)
          {
          console.log("REFRESH FAILED: user not found");
          cookies.clearRefreshCookie(res);
-         return res.status(401).json({ error: 'Invalid token' });
+         return res.status(401).json({ error: 'User referenced by token no longer exists.' });
          }
 
       // 3. Validate identity hash (global invalidation)
@@ -74,7 +78,7 @@ async function refreshHandler(req, res)
          {
          console.log("REFRESH FAILED: identity hash mismatch detected");
          cookies.clearRefreshCookie(res);
-         return res.status(401).json({ error: 'Invalid token' });
+         return res.status(401).json({ error: 'Identity hash mismatch (global invalidation triggered).' });
          }
 
       // 4. Locate session
@@ -84,7 +88,7 @@ async function refreshHandler(req, res)
          {
          console.log("REFRESH FAILED: session not found");
          cookies.clearRefreshCookie(res);
-         return res.status(401).json({ error: 'Invalid token' });
+         return res.status(401).json({ error: 'Session referenced by token no longer exists.' });
          }
 
       // 5. Validate session fingerprint (per-session theft detection)
@@ -94,7 +98,7 @@ async function refreshHandler(req, res)
          {
          console.log("REFRESH FAILED: session fingerprint mismatch detected");
          cookies.clearRefreshCookie(res);
-         return res.status(401).json({ error: 'Invalid token' });
+         return res.status(401).json({ error: 'Session fingerprint mismatch (possible token theft).' });
          }
 
       // 6. Increment refresh_counter (rotation)
@@ -119,7 +123,7 @@ async function refreshHandler(req, res)
       {
       console.log("REFRESH FAILED: unexpected error");
       console.error('Refresh error:', err);
-      return res.status(401).json({ error: 'Invalid token' });
+      return res.status(401).json({ error: 'Unexpected error during refresh.' });
       }
    }
 

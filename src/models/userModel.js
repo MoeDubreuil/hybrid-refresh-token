@@ -23,6 +23,19 @@ function findUserByLoginIdentifier(login_identifier)
    }
 
 //------------------------------------------------------------------------------
+// incrementTokenVersion
+//------------------------------------------------------------------------------
+function incrementTokenVersion(id)
+   {
+   user = getUserById(id);
+
+   if ( user != null )
+      return ++ user.token_version;
+
+   return 0;
+   }
+
+//------------------------------------------------------------------------------
 // seedUser
 //------------------------------------------------------------------------------
 function seedUser(user)
@@ -34,5 +47,6 @@ module.exports =
    {
    getUserById,
    findUserByLoginIdentifier,
-   seedUser
+   seedUser,
+   incrementTokenVersion
    };
