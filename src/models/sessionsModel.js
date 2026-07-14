@@ -12,7 +12,7 @@ function createSession(user_id)
    {
    var session =
       {
-      session_id: nextSessionId,
+      session_id: nextSessionId ++,
       user_id: user_id,
       refresh_counter: 0,
       created_at: Date.now(),
@@ -20,7 +20,6 @@ function createSession(user_id)
       };
 
    sessions.set(session.session_id, session);
-   ++ nextSessionId;
 
    return session;
    }
