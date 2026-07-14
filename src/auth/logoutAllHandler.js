@@ -20,7 +20,10 @@ async function logoutAllHandler(req, res)
       }
 
 
-   // Increment token_version (global invalidation)
+   // Because the token version field is used to construct the identity string,
+   // changing its' value changes the identity hash. This causes all tokens which 
+   // carry the identity hash to become invalid globally and instantly.
+   
    const newVersion = userModel.incrementTokenVersion(userId);
 
    if ( newVersion === 0 )
@@ -31,7 +34,7 @@ async function logoutAllHandler(req, res)
 
    console.log(`LOGOUT-ALL: token_version ${newVersion - 1} → ${newVersion}`);
 
-   // Clear refresh cookie
+   // Cookie and session cleanup      
    cookies.clearRefreshCookie(res);
    sessionsModel.deleteSessionsForUser(userId);
    console.log(`LOGOUT-ALL: deleted all sessions for user ${userId}`);

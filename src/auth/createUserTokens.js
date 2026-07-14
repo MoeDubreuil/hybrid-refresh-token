@@ -4,7 +4,7 @@ const { createRefreshToken } = require('./refreshTokens');
 
 
 //------------------------------------------------------------------------------
-// createUserTokens (teaching repo version)
+// createUserTokens
 //------------------------------------------------------------------------------
 // Issues a new access token and refresh token. The refresh token contains:
 //   - user.id
