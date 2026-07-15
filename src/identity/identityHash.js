@@ -1,4 +1,9 @@
-const bcrypt                      = require('bcrypt');
+// bcrypt is a native module and bcryptjs is pure JavaScript. In this demonstration
+// repo portability is preferred over execution speed.
+
+const bcrypt = require('bcryptjs');
+
+
 const { createUserIdentityState } = require('./identityState');
 const { buildIdentityString }     = require('./identityString');
 

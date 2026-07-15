@@ -6,7 +6,7 @@ cls
 @echo * express
 @echo * cookie-parser
 @echo * dotenv
-@echo * bcrypt
+@echo * bcryptjs
 @echo * jsonwebtoken
 @echo.
 
@@ -23,7 +23,7 @@ IF ERRORLEVEL 1 goto ErrorExit
 call npm i --save dotenv
 IF ERRORLEVEL 1 goto ErrorExit
 
-call npm i --save bcrypt
+call npm i --save bcryptjs
 IF ERRORLEVEL 1 goto ErrorExit
 
 call npm i --save jsonwebtoken
