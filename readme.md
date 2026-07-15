@@ -66,7 +66,7 @@ This teaching repo uses **abstracted** identity‑state fields:
 * `token_version`  
 * `app_token_version`
 
-These fields are combined into a deterministic **identity string**, which is then passed through bcrypt to produce an **identity hash**.
+These fields are combined into a deterministic **identity string**, which is then passed through the bcrypt algorithm to produce an **identity hash**.
 
 The ordering of fields in the identity string is **arbitrary** in this repo.
 
@@ -173,15 +173,16 @@ This prevents:
 
 Logout is simple:
 
-* Clear the refresh cookie  
-* Do not store or revoke tokens  
+* Clear the refresh cookie
+* Delete the associated session row (if the refresh token is valid)
+* Do not store or revoke tokens
 * Do not track devices
 
 Each device logs itself out independently.
 
 # **11\. Global Logout**
 
-Incrementing `token_version` invalidates all refresh tokens for a user.
+Incrementing `token_version` invalidates all refresh tokens for a user, deletes all associated session rows, and clears the current user's cookie.
 
 Incrementing `app_token_version` invalidates all refresh tokens for all users.
 
@@ -206,6 +207,8 @@ The `scripts/` directory includes Windows batch files that demonstrate:
 * **session‑fingerprint mismatch** (per‑session theft detection)  
 * **refresh rotation**  
 * **stateless logout**
+* **session deletion on logout**
+* **session deletion on logout‑all**
 
 These scripts use intentionally verbose error messages for teaching purposes.
 
