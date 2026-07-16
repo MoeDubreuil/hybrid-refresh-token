@@ -24,7 +24,7 @@ Mainstream refresh‑token models force trade‑offs:
 
 The **Hybrid Refresh Token Model** resolves this tension by anchoring refresh‑token validity to the user’s **identity state**, not to server‑side token storage.
 
-This repository implements the hybrid model in a minimal, didactic form.
+This repository implements the hybrid model in minimal form.
 
 # **2\. Core Idea**
 
@@ -37,7 +37,7 @@ The server does **not** store refresh tokens.
 
 The server does **not** store identity hashes.
 
-The server stores only the user record and a minimal **non‑tracking session table**.
+The server stores only the user record and a minimal **non-tracking session table**.
 
 On every refresh:
 
