@@ -1,7 +1,7 @@
 const userModel       = require('../models/userModel');
 const sessionsModel   = require('../models/sessionsModel');
 const cookies         = require('../utils/cookies');
-const { createUserTokens } = require('./createUserTokens');
+const tokens          = require('./tokens');
 
 //------------------------------------------------------------------------------
 // loginHandler
@@ -27,7 +27,7 @@ async function loginHandler(req, res)
 
       // Issue user-based tokens (access and refresh), and store refresh
       // token in a cookie.
-      const accessToken = await createUserTokens(res, user, session);
+      const accessToken = await tokens.createUserTokens(res, user, session);
 
       // Create the response object
       return res.json(

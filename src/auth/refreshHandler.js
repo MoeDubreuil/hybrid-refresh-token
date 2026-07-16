@@ -7,12 +7,12 @@
 // step of the flow.
 //------------------------------------------------------------------------------
 
-const crypto               = require('../utils/crypto');
-const cookies              = require('../utils/cookies');
-const userModel            = require('../models/userModel');
-const sessionsModel        = require('../models/sessionsModel');
-const identityHash         = require('../identity/identityHash');
-const { createUserTokens } = require('./createUserTokens');
+const crypto         = require('../utils/crypto');
+const cookies        = require('../utils/cookies');
+const userModel      = require('../models/userModel');
+const sessionsModel  = require('../models/sessionsModel');
+const identityHash   = require('../identity/identityHash');
+const tokens         = require('./tokens');
 
 //------------------------------------------------------------------------------
 // validateSession
@@ -109,7 +109,7 @@ async function refreshHandler(req, res)
       console.log(`REFRESH #${oldCounter} → #${newCounter} (identity ok, session ok)`);
 
       // 7. Rotate tokens
-      const accessToken = await createUserTokens(res, user, session);
+      const accessToken = await tokens.createUserTokens(res, user, session);
 
       // 8. Return new access token + user info
       return res.json(
