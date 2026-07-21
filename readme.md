@@ -1,6 +1,7 @@
-**This repository is a teaching reference.
-It is not a production authentication system.
-It intentionally omits security‑critical features**.
+**This is a teaching repo demonstrating the hybrid refresh token model and the minimal 
+  non‑tracking session table required for refresh‑token‑theft detection. It is not a 
+  production auth system, as it intentionally omits security-critical features**.
+
 
 # **Hybrid Refresh Token Reference Implementation**
 
