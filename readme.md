@@ -233,7 +233,7 @@ install\_depends.bat
 
 Code
 
-copy .env.example .env
+copy .env example.env
 
 node src/index.js
 
